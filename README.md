@@ -47,10 +47,17 @@ render(
 ```tsx
 // src/App.tsx
 import { useAuth0 } from 'auth0-solid'
-import { Component, Match, Switch } from 'solid-js'
+import { createSignal, Match, Switch } from 'solid-js'
 
-const App = (): Component => {
-  const { state: auth, loginWithRedirect, logout } = useAuth0()
+const App = () => {
+  const {
+    state: auth,
+    loginWithRedirect,
+    logout,
+    getAccessTokenSilently,
+  } = useAuth0()
+
+  const [token, setToken] = createSignal('')
 
   return (
     <Switch
@@ -64,6 +71,12 @@ const App = (): Component => {
       <Match when={auth.isAuthenticated}>
         <div>
           <h1>Hello {auth.user?.name}</h1>
+          <pre>{token()}</pre>
+          <button
+            onClick={async () => setToken(await getAccessTokenSilently())}
+          >
+            Get access token
+          </button>
           <button onClick={() => logout()}>Logout</button>
         </div>
       </Match>
@@ -71,7 +84,7 @@ const App = (): Component => {
   )
 }
 
-export default App;
+export default App
 ```
 ## License
 
