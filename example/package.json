@@ -1,0 +1,21 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "serve": "vite preview",
+    "start": "vite"
+  },
+  "dependencies": {
+    "auth0-solid": "file:../",
+    "solid-js": "file:../node_modules/solid-js"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5",
+    "vite": "^4.1.1",
+    "vite-plugin-solid": "^2.5.0"
+  }
+}

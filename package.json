@@ -1,0 +1,51 @@
+{
+  "name": "auth0-solid",
+  "version": "0.0.0",
+  "description": "Auth0 SDK for Solid Single Page Applications (SPA)",
+  "keywords": [
+    "auth0",
+    "solidjs"
+  ],
+  "homepage": "https://github.com/cdegrel/auth0-solid#readme",
+  "bugs": {
+    "url": "https://github.com/cdegrel/auth0-solid/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdegrel/auth0-solid.git"
+  },
+  "license": "MIT",
+  "author": "Cédric Degrelle",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@auth0/auth0-spa-js": "^2.0.3",
+    "solid-js": "^1.6.11"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4",
+    "tsup": "^6.6.3",
+    "tsup-preset-solid": "^0.1.5",
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "@auth0/auth0-spa-js": "^2.0.3",
+    "solid-js": "^1.6.11"
+  },
+  "packageManager": "pnpm@7.27.0"
+}
