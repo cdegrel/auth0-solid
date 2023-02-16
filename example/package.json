@@ -10,7 +10,7 @@
     "start": "vite"
   },
   "dependencies": {
-    "auth0-solid": "file:../",
+    "auth0-solid": "link:..",
     "solid-js": "file:../node_modules/solid-js"
   },
   "devDependencies": {

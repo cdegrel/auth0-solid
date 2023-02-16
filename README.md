@@ -47,22 +47,27 @@ render(
 ```tsx
 // src/App.tsx
 import { useAuth0 } from 'auth0-solid'
-import { Component, Show } from 'solid-js'
+import { Component, Match, Switch } from 'solid-js'
 
 const App = (): Component => {
-  const { state: auth, loginWithRedirect, logout } = useAuth0();
+  const { state: auth, loginWithRedirect, logout } = useAuth0()
 
   return (
-    <Show when={auth.isLoading} fallback="Loading...">
-      <Show when={auth.isAuthenticated} fallback={
-        <button onClick={loginWithRedirect}>Login</button>
-      }>
+    <Switch
+      fallback={
         <div>
-          Hello {auth.user?.name}{' '}
-          <button onClick={logout}>Logout</button>
+          <button onClick={() => loginWithRedirect()}>Login</button>
         </div>
-      </Show>
-    </Show>
+      }
+    >
+      <Match when={auth.isLoading}>Loading...</Match>
+      <Match when={auth.isAuthenticated}>
+        <div>
+          <h1>Hello {auth.user?.name}</h1>
+          <button onClick={() => logout()}>Logout</button>
+        </div>
+      </Match>
+    </Switch>
   )
 }
 
