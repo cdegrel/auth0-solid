@@ -1,8 +1,15 @@
 import { useAuth0 } from 'auth0-solid'
-import { Match, Switch } from 'solid-js'
+import { createSignal, Match, Switch } from 'solid-js'
 
 export default () => {
-  const { state: auth, loginWithRedirect, logout } = useAuth0()
+  const {
+    state: auth,
+    loginWithRedirect,
+    logout,
+    getAccessTokenSilently,
+  } = useAuth0()
+
+  const [token, setToken] = createSignal('')
 
   return (
     <Switch
@@ -16,6 +23,12 @@ export default () => {
       <Match when={auth.isAuthenticated}>
         <div>
           <h1>Hello {auth.user?.name}</h1>
+          <pre>{token()}</pre>
+          <button
+            onClick={async () => setToken(await getAccessTokenSilently())}
+          >
+            Get access token
+          </button>
           <button onClick={() => logout()}>Logout</button>
         </div>
       </Match>

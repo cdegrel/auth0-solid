@@ -1,4 +1,9 @@
-import { LogoutOptions, RedirectLoginOptions } from '@auth0/auth0-spa-js'
+import {
+  GetTokenSilentlyOptions,
+  GetTokenSilentlyVerboseResponse,
+  LogoutOptions,
+  RedirectLoginOptions,
+} from '@auth0/auth0-spa-js'
 import { createContext } from 'solid-js'
 
 import { AppState } from './auth0-provider'
@@ -8,6 +13,15 @@ export type Auth0ContextValue = {
   state: Auth0State
   loginWithRedirect: (options?: RedirectLoginOptions<AppState>) => Promise<void>
   logout: (opts?: LogoutOptions) => void
+  getAccessTokenSilently: {
+    (
+      options: GetTokenSilentlyOptions & { detailedResponse: true },
+    ): Promise<GetTokenSilentlyVerboseResponse>
+    (options?: GetTokenSilentlyOptions): Promise<string>
+    (options: GetTokenSilentlyOptions): Promise<
+      GetTokenSilentlyVerboseResponse | string
+    >
+  }
 }
 
 const stub = (): never => {
@@ -18,4 +32,5 @@ export default createContext<Auth0ContextValue>({
   state: initialAuth0State,
   loginWithRedirect: stub,
   logout: stub,
+  getAccessTokenSilently: stub,
 })

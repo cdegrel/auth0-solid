@@ -22,3 +22,5 @@ const normalizeErrorFn =
   }
 
 export const loginError = normalizeErrorFn('Login failed')
+
+export const tokenError = normalizeErrorFn('Get access token failed')

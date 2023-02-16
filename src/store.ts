@@ -1,10 +1,11 @@
 import { User } from '@auth0/auth0-spa-js'
 import { createStore, produce } from 'solid-js/store'
+
 import { Auth0State, initialAuth0State } from './state'
 
 type Auth0Action =
   | {
-      type: 'INITIALIZED'
+      type: 'INITIALIZED' | 'GET_ACCESS_TOKEN_COMPLETE'
       user?: User
     }
   | { type: 'LOGOUT' }
@@ -25,6 +26,15 @@ export const createAuth0Store = (): [
             store.user = action.user
             store.isLoading = false
             store.error = undefined
+          }),
+        )
+        break
+      case 'GET_ACCESS_TOKEN_COMPLETE':
+        if (state.user === action.user) return
+        setState(
+          produce((store) => {
+            store.isAuthenticated = !!action.user
+            store.user = action.user
           }),
         )
         break

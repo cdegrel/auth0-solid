@@ -1,6 +1,7 @@
 import {
   Auth0Client,
   Auth0ClientOptions,
+  GetTokenSilentlyOptions,
   LogoutOptions,
   RedirectLoginOptions,
   User,
@@ -9,7 +10,7 @@ import { JSX, createEffect, mergeProps, splitProps } from 'solid-js'
 
 import Auth0Context from './auth0-context'
 import { createAuth0Store } from './store'
-import { hasAuthParams, loginError } from './utils'
+import { hasAuthParams, loginError, tokenError } from './utils'
 
 export type AppState = {
   returnTo?: string
@@ -78,12 +79,30 @@ export default (props: Auth0ProviderProps): JSX.Element => {
     }
   }
 
+  const getAccessTokenSilently = async (
+    opts?: GetTokenSilentlyOptions,
+  ): Promise<any> => {
+    let token
+    try {
+      token = await client.getTokenSilently(opts)
+    } catch (error) {
+      throw tokenError(error as Error)
+    } finally {
+      dispatch({
+        type: 'GET_ACCESS_TOKEN_COMPLETE',
+        user: await client.getUser(),
+      })
+    }
+    return token
+  }
+
   return (
     <Auth0Context.Provider
       value={{
         state,
         loginWithRedirect,
         logout,
+        getAccessTokenSilently,
       }}
     >
       {local.children}

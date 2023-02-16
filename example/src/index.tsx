@@ -23,6 +23,7 @@ render(
         scope: 'profile email',
         redirect_uri: window.location.origin,
       }}
+      useRefreshTokens
     >
       <App />
     </Auth0Provider>
