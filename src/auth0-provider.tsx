@@ -11,6 +11,7 @@ import { JSX, createEffect, mergeProps, splitProps } from 'solid-js'
 import Auth0Context from './auth0-context'
 import { createAuth0Store } from './store'
 import { hasAuthParams, loginError, tokenError } from './utils'
+import pkg from '../package.json'
 
 export type AppState = {
   returnTo?: string
@@ -27,6 +28,10 @@ const toAuth0ClientOptions = (
   opts: Auth0ProviderProps,
 ): Auth0ClientOptions => ({
   ...opts,
+  auth0Client: {
+    name: pkg.name,
+    version: pkg.version,
+  },
 })
 
 const defaultOnRedirectCallback = (appState?: AppState): void => {
