@@ -7,6 +7,7 @@ import {
   PopupConfigOptions,
   PopupLoginOptions,
   RedirectLoginOptions,
+  RedirectLoginResult,
 } from '@auth0/auth0-spa-js'
 import { createContext } from 'solid-js'
 
@@ -35,6 +36,9 @@ export type Auth0ContextValue = {
     config?: PopupConfigOptions,
   ) => Promise<string | undefined>
   getIdTokenClaims: () => Promise<IdToken | undefined>
+  handleRedirectCallback: (
+    url?: string,
+  ) => Promise<RedirectLoginResult | undefined>
 }
 
 const stub = (): never => {
@@ -49,4 +53,5 @@ export default createContext<Auth0ContextValue>({
   getAccessTokenSilently: stub,
   getAccessTokenWithPopup: stub,
   getIdTokenClaims: stub,
+  handleRedirectCallback: stub,
 })

@@ -6,7 +6,11 @@ import { Auth0State, initialAuth0State } from './state'
 type Auth0Action =
   | { type: 'LOGIN_POPUP_STARTED' }
   | {
-      type: 'INITIALIZED' | 'GET_ACCESS_TOKEN_COMPLETE' | 'LOGIN_POPUP_COMPLETE'
+      type:
+        | 'INITIALIZED'
+        | 'GET_ACCESS_TOKEN_COMPLETE'
+        | 'LOGIN_POPUP_COMPLETE'
+        | 'HANDLE_REDIRECT_COMPLETE'
       user?: User
     }
   | { type: 'LOGOUT' }
@@ -38,6 +42,7 @@ export const createAuth0Store = (): [
           }),
         )
         break
+      case 'HANDLE_REDIRECT_COMPLETE':
       case 'GET_ACCESS_TOKEN_COMPLETE':
         if (state.user === action.user) return
         setState(

@@ -8,6 +8,7 @@ import {
   PopupConfigOptions,
   PopupLoginOptions,
   RedirectLoginOptions,
+  RedirectLoginResult,
   User,
 } from '@auth0/auth0-spa-js'
 import { JSX, createEffect, mergeProps, splitProps } from 'solid-js'
@@ -131,6 +132,21 @@ export default (props: Auth0ProviderProps): JSX.Element => {
   const getIdTokenClaims = async (): Promise<IdToken | undefined> =>
     await client.getIdTokenClaims()
 
+  const handleRedirectCallback = async (
+    url?: string,
+  ): Promise<RedirectLoginResult | undefined> => {
+    try {
+      return await client.handleRedirectCallback(url)
+    } catch (error) {
+      throw tokenError(error as Error)
+    } finally {
+      dispatch({
+        type: 'HANDLE_REDIRECT_COMPLETE',
+        user: await client.getUser(),
+      })
+    }
+  }
+
   return (
     <Auth0Context.Provider
       value={{
@@ -141,6 +157,7 @@ export default (props: Auth0ProviderProps): JSX.Element => {
         getAccessTokenSilently,
         getAccessTokenWithPopup,
         getIdTokenClaims,
+        handleRedirectCallback,
       }}
     >
       {local.children}
