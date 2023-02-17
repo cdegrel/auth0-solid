@@ -12,10 +12,10 @@ import {
 import { createContext } from 'solid-js'
 
 import { AppState } from './auth0-provider'
-import { Auth0State, initialAuth0State } from './state'
+import { AuthState, initialAuthState } from './auth-state'
 
 export type Auth0ContextValue = {
-  state: Auth0State
+  state: AuthState
   loginWithRedirect: (options?: RedirectLoginOptions<AppState>) => Promise<void>
   loginWithPopup: (
     options?: PopupLoginOptions,
@@ -46,7 +46,7 @@ const stub = (): never => {
 }
 
 export default createContext<Auth0ContextValue>({
-  state: initialAuth0State,
+  state: initialAuthState,
   loginWithRedirect: stub,
   loginWithPopup: stub,
   logout: stub,

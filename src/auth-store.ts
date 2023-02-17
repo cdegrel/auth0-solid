@@ -1,9 +1,9 @@
 import { User } from '@auth0/auth0-spa-js'
 import { createStore, produce } from 'solid-js/store'
 
-import { Auth0State, initialAuth0State } from './state'
+import { AuthState, initialAuthState } from './auth-state'
 
-type Auth0Action =
+type AuthAction =
   | { type: 'LOGIN_POPUP_STARTED' }
   | {
       type:
@@ -16,13 +16,13 @@ type Auth0Action =
   | { type: 'LOGOUT' }
   | { type: 'ERROR'; error: Error }
 
-export const createAuth0Store = (): [
-  Auth0State,
-  (action: Auth0Action) => void,
+export const createAuthStore = (): [
+  AuthState,
+  (action: AuthAction) => void,
 ] => {
-  const [state, setState] = createStore(initialAuth0State)
+  const [state, setState] = createStore(initialAuthState)
 
-  const dispatch = (action: Auth0Action) => {
+  const dispatch = (action: AuthAction) => {
     switch (action.type) {
       case 'LOGIN_POPUP_STARTED':
         setState(

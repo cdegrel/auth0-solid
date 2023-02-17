@@ -14,7 +14,7 @@ import {
 import { JSX, createEffect, mergeProps, splitProps } from 'solid-js'
 
 import Auth0Context from './auth0-context'
-import { createAuth0Store } from './store'
+import { createAuthStore } from './auth-store'
 import { hasAuthParams, loginError, tokenError } from './utils'
 import pkg from '../package.json'
 
@@ -60,7 +60,7 @@ export default (props: Auth0ProviderProps): JSX.Element => {
     'onRedirectCallback',
   ])
 
-  const [state, dispatch] = createAuth0Store()
+  const [state, dispatch] = createAuthStore()
 
   const client = new Auth0Client(toAuth0ClientOptions(clientOpts))
 

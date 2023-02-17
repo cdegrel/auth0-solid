@@ -1,13 +1,13 @@
 import { User } from '@auth0/auth0-spa-js'
 
-export type Auth0State = {
+export type AuthState = {
   isLoading: boolean
   isAuthenticated: boolean
   user?: User
   error?: Error
 }
 
-export const initialAuth0State: Auth0State = {
+export const initialAuthState: AuthState = {
   isLoading: true,
   isAuthenticated: false,
 }
