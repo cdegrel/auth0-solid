@@ -3,6 +3,7 @@ import {
   Auth0ClientOptions,
   GetTokenSilentlyOptions,
   GetTokenWithPopupOptions,
+  IdToken,
   LogoutOptions,
   PopupConfigOptions,
   PopupLoginOptions,
@@ -127,6 +128,9 @@ export default (props: Auth0ProviderProps): JSX.Element => {
   ): Promise<string | undefined> =>
     getAccessToken(() => client.getTokenWithPopup(opts, config))
 
+  const getIdTokenClaims = async (): Promise<IdToken | undefined> =>
+    await client.getIdTokenClaims()
+
   return (
     <Auth0Context.Provider
       value={{
@@ -136,6 +140,7 @@ export default (props: Auth0ProviderProps): JSX.Element => {
         logout,
         getAccessTokenSilently,
         getAccessTokenWithPopup,
+        getIdTokenClaims,
       }}
     >
       {local.children}

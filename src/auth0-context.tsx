@@ -2,6 +2,7 @@ import {
   GetTokenSilentlyOptions,
   GetTokenSilentlyVerboseResponse,
   GetTokenWithPopupOptions,
+  IdToken,
   LogoutOptions,
   PopupConfigOptions,
   PopupLoginOptions,
@@ -33,6 +34,7 @@ export type Auth0ContextValue = {
     options?: GetTokenWithPopupOptions,
     config?: PopupConfigOptions,
   ) => Promise<string | undefined>
+  getIdTokenClaims: () => Promise<IdToken | undefined>
 }
 
 const stub = (): never => {
@@ -46,4 +48,5 @@ export default createContext<Auth0ContextValue>({
   logout: stub,
   getAccessTokenSilently: stub,
   getAccessTokenWithPopup: stub,
+  getIdTokenClaims: stub,
 })
