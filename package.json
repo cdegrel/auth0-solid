@@ -1,6 +1,6 @@
 {
   "name": "auth0-solid",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Auth0 SDK for Solid Single Page Applications (SPA)",
   "keywords": [
     "auth0",
