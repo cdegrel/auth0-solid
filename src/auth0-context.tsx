@@ -1,7 +1,9 @@
 import {
   GetTokenSilentlyOptions,
   GetTokenSilentlyVerboseResponse,
+  GetTokenWithPopupOptions,
   LogoutOptions,
+  PopupConfigOptions,
   RedirectLoginOptions,
 } from '@auth0/auth0-spa-js'
 import { createContext } from 'solid-js'
@@ -22,6 +24,10 @@ export type Auth0ContextValue = {
       GetTokenSilentlyVerboseResponse | string
     >
   }
+  getAccessTokenWithPopup: (
+    options?: GetTokenWithPopupOptions,
+    config?: PopupConfigOptions,
+  ) => Promise<string | undefined>
 }
 
 const stub = (): never => {
@@ -33,4 +39,5 @@ export default createContext<Auth0ContextValue>({
   loginWithRedirect: stub,
   logout: stub,
   getAccessTokenSilently: stub,
+  getAccessTokenWithPopup: stub,
 })

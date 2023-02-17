@@ -2,7 +2,9 @@ import {
   Auth0Client,
   Auth0ClientOptions,
   GetTokenSilentlyOptions,
+  GetTokenWithPopupOptions,
   LogoutOptions,
+  PopupConfigOptions,
   RedirectLoginOptions,
   User,
 } from '@auth0/auth0-spa-js'
@@ -84,12 +86,12 @@ export default (props: Auth0ProviderProps): JSX.Element => {
     }
   }
 
-  const getAccessTokenSilently = async (
-    opts?: GetTokenSilentlyOptions,
-  ): Promise<any> => {
+  const getAccessToken = async (
+    getToken: () => Promise<string | undefined>,
+  ): Promise<string | undefined> => {
     let token
     try {
-      token = await client.getTokenSilently(opts)
+      token = await getToken()
     } catch (error) {
       throw tokenError(error as Error)
     } finally {
@@ -101,6 +103,16 @@ export default (props: Auth0ProviderProps): JSX.Element => {
     return token
   }
 
+  const getAccessTokenSilently = async (
+    opts?: GetTokenSilentlyOptions,
+  ): Promise<any> => getAccessToken(() => client.getTokenSilently(opts))
+
+  const getAccessTokenWithPopup = async (
+    opts?: GetTokenWithPopupOptions,
+    config?: PopupConfigOptions,
+  ): Promise<string | undefined> =>
+    getAccessToken(() => client.getTokenWithPopup(opts, config))
+
   return (
     <Auth0Context.Provider
       value={{
@@ -108,6 +120,7 @@ export default (props: Auth0ProviderProps): JSX.Element => {
         loginWithRedirect,
         logout,
         getAccessTokenSilently,
+        getAccessTokenWithPopup,
       }}
     >
       {local.children}
