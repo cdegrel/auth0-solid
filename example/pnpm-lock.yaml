@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@solidjs/router': ^0.7.0
   auth0-solid: link:..
   solid-js: file:../node_modules/solid-js
   typescript: ^4.9.5
@@ -8,7 +9,8 @@ specifiers:
   vite-plugin-solid: ^2.5.0
 
 dependencies:
-  auth0-solid: file:.._solid-js@1.6.11
+  '@solidjs/router': 0.7.0_solid-js@1.6.11
+  auth0-solid: link:..
   solid-js: file:../node_modules/solid-js
 
 devDependencies:
@@ -25,10 +27,6 @@ packages:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.17
     dev: true
-
-  /@auth0/auth0-spa-js/2.0.3:
-    resolution: {integrity: sha512-eC3cBJCGOc+k4ZMxvKTo0KhhJJ4/9siA7C2RhDcWqSbrRcjB04RimM4Jp5ExgXtrwFhx8elk7DLxysrhTQYvjQ==}
-    dev: false
 
   /@babel/code-frame/7.18.6:
     resolution: {integrity: sha512-TDCmlK5eOvH+eH7cdAFlNXeVJqWIQ7gW9tY1GJIpUtFb6CmjVyq2VM3u71bOyR8CRihcCgMUYoDNyLXao3+70Q==}
@@ -573,6 +571,14 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
+  /@solidjs/router/0.7.0_solid-js@1.6.11:
+    resolution: {integrity: sha512-8HI84twe5FjYRebSLMAhtkL9bRuTDIlxJK56kjfjU9WKGoUCTaWpCnkuj8Hqde1bWZ0X+GOZxKDfNkn1CjtjxA==}
+    peerDependencies:
+      solid-js: ^1.5.3
+    dependencies:
+      solid-js: file:../node_modules/solid-js
+    dev: false
+
   /ansi-styles/3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
     engines: {node: '>=4'}
@@ -951,15 +957,3 @@ packages:
     version: 1.6.11
     dependencies:
       csstype: 3.1.1
-
-  file:.._solid-js@1.6.11:
-    resolution: {directory: .., type: directory}
-    id: file:..
-    name: auth0-solid
-    version: 0.0.0
-    peerDependencies:
-      solid-js: ^1.6.11
-    dependencies:
-      '@auth0/auth0-spa-js': 2.0.3
-      solid-js: file:../node_modules/solid-js
-    dev: false

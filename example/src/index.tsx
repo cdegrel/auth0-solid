@@ -1,4 +1,5 @@
 /* @refresh reload */
+import { Router } from '@solidjs/router'
 import { Auth0Provider } from 'auth0-solid'
 import { render } from 'solid-js/web'
 
@@ -25,7 +26,9 @@ render(
       }}
       useRefreshTokens
     >
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Auth0Provider>
   ),
   root!,

@@ -1,37 +1,36 @@
-import { useAuth0 } from 'auth0-solid'
-import { createSignal, Match, Switch } from 'solid-js'
+import { RouteDefinition, useRoutes } from '@solidjs/router'
+import { useAuth0, withAuthRequired } from 'auth0-solid'
+import { Match, Switch } from 'solid-js'
+
+import { Topbar } from './Topbar'
+import Users from './Users'
+
+const routes: RouteDefinition[] = [
+  {
+    path: '/',
+  },
+  {
+    path: '/users',
+    component: withAuthRequired(Users),
+  },
+]
 
 export default () => {
-  const {
-    state: auth,
-    loginWithRedirect,
-    logout,
-    getAccessTokenSilently,
-  } = useAuth0()
+  const { state: auth } = useAuth0()
 
-  const [token, setToken] = createSignal('')
+  const Routes = useRoutes(routes)
 
   return (
-    <Switch
-      fallback={
-        <div>
-          <button onClick={() => loginWithRedirect()}>Login</button>
-        </div>
-      }
-    >
-      <Match when={auth.isLoading}>Loading...</Match>
-      <Match when={auth.isAuthenticated}>
-        <div>
-          <h1>Hello {auth.user?.name}</h1>
-          <pre>{token()}</pre>
-          <button
-            onClick={async () => setToken(await getAccessTokenSilently())}
-          >
-            Get access token
-          </button>
-          <button onClick={() => logout()}>Logout</button>
-        </div>
-      </Match>
-    </Switch>
+    <div>
+      <Topbar />
+      <main>
+        <Switch fallback="Loading...">
+          <Match when={auth.error}>Oops... {auth.error?.message}</Match>
+          <Match when={!auth.isLoading}>
+            <Routes />
+          </Match>
+        </Switch>
+      </main>
+    </div>
   )
 }
