@@ -5,6 +5,7 @@ import {
   GetTokenWithPopupOptions,
   LogoutOptions,
   PopupConfigOptions,
+  PopupLoginOptions,
   RedirectLoginOptions,
   User,
 } from '@auth0/auth0-spa-js'
@@ -79,6 +80,19 @@ export default (props: Auth0ProviderProps): JSX.Element => {
     await client.loginWithRedirect(opts)
   }
 
+  const loginWithPopup = async (
+    opts?: PopupLoginOptions,
+    config?: PopupConfigOptions,
+  ): Promise<void> => {
+    dispatch({ type: 'LOGIN_POPUP_STARTED' })
+    try {
+      await client.loginWithPopup(opts, config)
+    } catch (error) {
+      return dispatch({ type: 'ERROR', error: loginError(error as Error) })
+    }
+    dispatch({ type: 'LOGIN_POPUP_COMPLETE', user: await client.getUser() })
+  }
+
   const logout = async (opts: LogoutOptions = {}): Promise<void> => {
     await client.logout(opts)
     if (opts.openUrl || opts.openUrl === false) {
@@ -118,6 +132,7 @@ export default (props: Auth0ProviderProps): JSX.Element => {
       value={{
         state,
         loginWithRedirect,
+        loginWithPopup,
         logout,
         getAccessTokenSilently,
         getAccessTokenWithPopup,

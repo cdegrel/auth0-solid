@@ -4,8 +4,9 @@ import { createStore, produce } from 'solid-js/store'
 import { Auth0State, initialAuth0State } from './state'
 
 type Auth0Action =
+  | { type: 'LOGIN_POPUP_STARTED' }
   | {
-      type: 'INITIALIZED' | 'GET_ACCESS_TOKEN_COMPLETE'
+      type: 'INITIALIZED' | 'GET_ACCESS_TOKEN_COMPLETE' | 'LOGIN_POPUP_COMPLETE'
       user?: User
     }
   | { type: 'LOGOUT' }
@@ -19,6 +20,14 @@ export const createAuth0Store = (): [
 
   const dispatch = (action: Auth0Action) => {
     switch (action.type) {
+      case 'LOGIN_POPUP_STARTED':
+        setState(
+          produce((store) => {
+            store.isLoading = true
+          }),
+        )
+        break
+      case 'LOGIN_POPUP_COMPLETE':
       case 'INITIALIZED':
         setState(
           produce((store) => {
